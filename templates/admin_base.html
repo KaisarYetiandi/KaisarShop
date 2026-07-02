@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="{{ lang }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>{% block title %}Admin{% endblock %} &mdash; KaisarShop</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header class="topbar">
+        <div class="topbar-inner">
+            <div class="admin-header-left">
+                <a href="{{ url_for('index') }}" class="brand"><img src="https://raw.githubusercontent.com/KaisarYetiandi/Image/refs/heads/main/IMG_20260703_005311_142.jpg" alt="KaisarShop" class="brand-logo"> KaisarShop</a>
+                <span class="admin-badge">Admin Portal</span>
+            </div>
+            <nav class="nav admin-nav">
+                <a href="{{ url_for('admin_dashboard') }}">Dashboard</a>
+                <a href="{{ url_for('admin_products') }}">Products</a>
+                <a href="{{ url_for('admin_orders') }}">Orders</a>
+                <a href="{{ url_for('admin_buyers') }}">Buyers</a>
+                <span class="user-chip">{{ current_user.full_name }}</span>
+                <a href="{{ url_for('logout') }}" class="btn btn-sm">Logout</a>
+            </nav>
+        </div>
+    </header>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="flash-wrap">
+                {% for category, message in messages %}
+                    <div class="flash flash-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <main class="container">
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>
